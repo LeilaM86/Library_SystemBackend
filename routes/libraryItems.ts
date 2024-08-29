@@ -2,6 +2,7 @@ import express from "express";
 import { PrismaClient } from "@prisma/client";
 import cuid from "cuid";
 import { LibraryItemData, libraryItemSchema } from "../schema/LibraryItems";
+import auth from "../middleware/auth";
 
 const router = express.Router();
 const prisma = new PrismaClient();
@@ -40,7 +41,7 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-router.post("/", async (req, res) => {
+router.post("/", auth, async (req, res) => {
   const newItem = req.body;
 
   if (!newItem.id) {
@@ -83,7 +84,7 @@ router.post("/", async (req, res) => {
   }
 });
 
-router.put("/:id", async (req, res) => {
+router.put("/:id", auth, async (req, res) => {
   try {
     console.log("uppdatera bok i db");
     // Validera inkommande data
@@ -116,7 +117,7 @@ router.put("/:id", async (req, res) => {
   }
 });
 
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", auth, async (req, res) => {
   try {
     console.log("Received request to delete library item:", req.params.id);
 
