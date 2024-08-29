@@ -7,7 +7,15 @@ import libraryItems from "./routes/libraryItems";
 
 const app = express();
 
-app.use(cors({ origin: "http://localhost:5173" }));
+app.use(
+  cors({
+    origin: [
+      "http://localhost:5173",
+      "http://localhost:4173",
+      "https://library-system-frontend-4iuq.onrender.com",
+    ],
+  })
+);
 app.use(express.json());
 app.use("/api/categories", categories);
 app.use("/api/library-items", libraryItems);
